@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+  </startup>
+  <appSettings>
+    <!-- Configuración del Servidor -->
+    <add key="ServiceName" value="Automatic Messaging Service" />
+    <add key="Description" value="Servicio que permite enviar mensajes automáticos" />
+    <!-- Configuración de la conexión con la Base de Datos -->
+    <add key="IPServer" value="localhost" />
+    <add key="PORT" value="3306" />
+    <add key="username" value="admin" />
+    <add key="password" value="admin" />
+    <add key="dbname" value="empresa" />
+    <!-- Configuración de API Whatsapp -->
+    <add key="APIversion" value="v17.0" />
+    <add key="APIphoneID" value="115597018100112" />
+    <add key="APIauthtoken" value="EAALrIISbTX8BO4LgLrvI9m1Xo01yQhLlEkUktkPplGNGLDE0g5BsDqjGh9eWht9dvM9M3062FCREbNfwZChREjNZBbRKBR0eVGwhb4CUxczaZAfqsQB9sZBSIZCRohEUH4jm47m3IkmHZA0GeaWwxSMq1wbveV1CH9orxr1vv0Pe5nM7JqYdCIq0rQr0RQQ4keG5aZCLaVZAF2gzs10M9wGsx6o0LuZBTMZBtMOYkZD" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.1.2" newVersion="4.0.1.2" />
+      </dependentAssembly>
+    </assemblyBinding>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
