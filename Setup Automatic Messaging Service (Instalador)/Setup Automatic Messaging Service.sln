@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup Automatic Messaging Service", "Setup Automatic Messaging Service.vdproj", "{417A8936-1119-43F2-9C78-EF66D1BCA1BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticMessaging", "..\AutomaticMessaging\AutomaticMessaging.csproj", "{A1D252A5-CEAC-48BA-BF6C-76C0B3EA6722}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticMessaging", "..\AutomaticMessaging (Servicio)\AutomaticMessaging.csproj", "{A1D252A5-CEAC-48BA-BF6C-76C0B3EA6722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Collections.Generic;
 using System;
+using System.Data.SqlClient;
 
 namespace AutomaticMessaging
 {
@@ -26,13 +27,8 @@ namespace AutomaticMessaging
     internal class DBConnect
     {
         public MySqlConnection sqlConexion;
-        private string IP;
+        private string IP, username, password, dbname;
         private int port;
-        private string username;
-        private string password;
-        private string dbname;
-        
-
 
         public DBConnect(string IP, int port, string username, string password, string dbname)
         {
@@ -45,53 +41,65 @@ namespace AutomaticMessaging
         }
         public void Connect()
         {
-            //conexion a mysql
             this.sqlConexion = new MySqlConnection("datasource=" + this.IP + ";port=" + this.port + ";username=" + this.username + ";password=" + this.password + ";database=" + this.dbname);
             try
             {
                 this.sqlConexion.Open();
-                new Logger().WriteToFile("Conexión con MySQL iniciada el " + DateTime.Now);
+                new Logger().WriteToFile("[DEBUG] Conexión con MySQL iniciada el " + DateTime.Now);
             }
             catch (System.Exception ex)
-            {
-                new Logger().WriteToFile("Algo sucedió con MySQL el " + DateTime.Now + "\n" + ex + "\n\n");
-            }
+            { new Logger().WriteToFile("[ERROR] Algo sucedió con MySQL el " + DateTime.Now + "\n" + ex + "\n\n"); }
         }
 
         public List<Mensaje> GetData()
         {
             List<Mensaje> mensajes = new List<Mensaje> { };
 
-            MySqlCommand cmd = this.sqlConexion.CreateCommand();
-            cmd.CommandText = "SELECT * from mensajes";
-
-            MySqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Mensaje m;
-                m.ID = reader.GetInt32("ID");
-                m.codecountry = reader.IsDBNull(1) ? "" : reader.GetString("codecountry");
-                m.phone = reader.GetString("phone");
-                m.message = reader.GetString("message");
-                mensajes.Add(m);
+                using (MySqlCommand cmd = this.sqlConexion.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * from mensajes";
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
+                        {
+                            Mensaje m;
+                            m.ID = reader.GetInt32("ID");
+                            m.codecountry = reader.IsDBNull(1) ? "" : reader.GetString("codecountry");
+                            m.phone = reader.GetString("phone");
+                            m.message = reader.GetString("message");
+                            mensajes.Add(m);
+                        }
+                }
             }
-            reader.Close();
-
+            catch (Exception e)
+            {
+                new Logger().WriteToFile("[ERROR] Ocurrió algún error: " + e.Message);
+            }
             return mensajes;
         }
 
         public void Delete(int ID)
         {
-            MySqlCommand cmd = this.sqlConexion.CreateCommand();
-            cmd.CommandText = "DELETE FROM mensajes WHERE ID = @word";
-            cmd.Parameters.AddWithValue("@word", ID);
-            cmd.ExecuteNonQuery();
+            try
+            {
+                using (MySqlCommand cmd = this.sqlConexion.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM mensajes WHERE ID = @word";
+                    cmd.Parameters.AddWithValue("@word", ID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                new Logger().WriteToFile("[ERROR] No se pudo eliminar el registro: " + e.Message);
+            }
         }
 
         public void Disconnect()
         {
             this.sqlConexion.Close();
-            new Logger().WriteToFile("Conexión con MySQL cerrada el " + DateTime.Now);
+            new Logger().WriteToFile("[DEBUG] Conexión con MySQL cerrada el " + DateTime.Now);
         }
     }
 

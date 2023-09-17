@@ -38,10 +38,10 @@ namespace AutomaticMessaging
 
         protected override void OnStart(string[] args)
         {
-            new Logger().WriteToFile("Servicio iniciado el " + DateTime.Now);
-            
+            new Logger().WriteToFile("[INFO] Servicio iniciado el " + DateTime.Now);
+
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            timer.Interval = 30*this.segundos;
+            timer.Interval = 30 * this.segundos;
             timer.Enabled = true;
 
             ExecuteCommand();
@@ -49,26 +49,30 @@ namespace AutomaticMessaging
 
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
-            new Logger().WriteToFile("Servicio ejecutado el " + DateTime.Now);
+            new Logger().WriteToFile("[INFO] Servicio ejecutado el " + DateTime.Now);
             ExecuteCommand();
-            
+
         }
 
         protected override void OnStop()
         {
-            new Logger().WriteToFile("Servicio detenido el " + DateTime.Now);
+            new Logger().WriteToFile("[INFO] Servicio detenido el " + DateTime.Now);
             db.Disconnect();
         }
 
-        protected async void ExecuteCommand()
+        protected void ExecuteCommand()
         {
             db.Connect();
             List<Mensaje> mensajes = db.GetData();
             foreach (Mensaje mensaje in mensajes)
             {
-                //await hs.PostAsync(mensaje.phone, mensaje.message); //Enviar mensaje
-                new Logger().WriteToFile($"Mensaje enviado a {mensaje.phone} el " + DateTime.Now);
-                db.Delete(mensaje.ID);
+                Task<string> response = hs.PostAsync(mensaje.phone, mensaje.message); //Enviar 
+                response.Wait();
+                if (response.Result == null)
+                {
+                    new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + mensaje.phone);
+                    db.Delete(mensaje.ID);
+                }
             }
             db.Disconnect();
         }

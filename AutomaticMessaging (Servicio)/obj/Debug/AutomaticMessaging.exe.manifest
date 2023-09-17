@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AutomaticMessaging.exe" size="18376">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AutomaticMessaging.exe" size="19400">
       <assemblyIdentity name="AutomaticMessaging" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nhzpkwJYOj7ZQWFwtHcj3VkYGsUsFJVWp8Z0gXxzeL0=</dsig:DigestValue>
+        <dsig:DigestValue>ValotQ+qz+64ugoTeggPG5ORj4XZ450HU1rvehjoZpg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -281,13 +281,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="AutomaticMessaging.exe.config" size="2683">
+  <file name="AutomaticMessaging.exe.config" size="2687">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>VqFcTDnemaHphSkFI/dNBLCXUORT4Zn3BkaaxJVbm64=</dsig:DigestValue>
+      <dsig:DigestValue>liH8vLC181KaM/mnuAdIu9eQRg0/jwCiTTKg+H3MDkQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
