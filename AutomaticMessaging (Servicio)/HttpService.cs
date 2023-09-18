@@ -27,6 +27,7 @@ namespace AutomaticMessaging
         }
         public async Task<string> PostAsync(string phone, string message)
         {
+            string nada;
             StringContent jsonContent = new StringContent(
                 JsonSerializer.Serialize(
                 new

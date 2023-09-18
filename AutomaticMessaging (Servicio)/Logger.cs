@@ -22,7 +22,7 @@ namespace AutomaticMessaging
                 Directory.CreateDirectory(path);
             }
 
-            string filepath = this.path + "\\logs\\ServiceLog_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
+            string filepath = this.path + "\\logs\\ServiceLogs_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
             if (!File.Exists(filepath))
             {
                 using (StreamWriter sw = File.CreateText(filepath))
