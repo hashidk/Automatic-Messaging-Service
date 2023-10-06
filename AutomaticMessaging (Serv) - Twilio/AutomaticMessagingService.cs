@@ -22,8 +22,7 @@ namespace AutomaticMessaging
 
         DBConnect db;
         int segundos = 1000;
-        HttpService hs;
-
+        string from_phone;
         public AutomaticMessagingService()
         {
             InitializeComponent();
@@ -34,12 +33,10 @@ namespace AutomaticMessaging
             string dbname = ConfigurationManager.AppSettings["dbname"];
             this.db = new DBConnect(ip_server, int.Parse(PORT), username, password, dbname);
 
-            string version = ConfigurationManager.AppSettings["APIversion"];
-            string phone_id = ConfigurationManager.AppSettings["APIphoneID"];
-            this.hs = new HttpService($"https://graph.facebook.com/{version}/{phone_id}/messages");
+            var accountSid = ConfigurationManager.AppSettings["accountSid"];
+            var authToken = ConfigurationManager.AppSettings["authToken"];
+            this.from_phone = ConfigurationManager.AppSettings["from_phone"];
 
-            var accountSid = "AC37cb81d10e17e5edf8ef63312b14b927";
-            var authToken = "4ce9f0bf71ae48419c1c8ca263c1e59c";
             TwilioClient.Init(accountSid, authToken);
         }
 
@@ -70,7 +67,6 @@ namespace AutomaticMessaging
         protected void ExecuteCommand()
         {
             db.Connect();
-            string from_phone   = "+14155238886";
             List<Mensaje> mensajes = db.GetData();
             foreach (Mensaje mensaje in mensajes)
             {
@@ -78,7 +74,7 @@ namespace AutomaticMessaging
                 if (!to_phone[0].Equals("+")) to_phone = "+" + to_phone;
 
                 var messageOptions  = new CreateMessageOptions(new PhoneNumber($"whatsapp:{to_phone}"));
-                messageOptions.From = new PhoneNumber($"whatsapp:{from_phone}");
+                messageOptions.From = new PhoneNumber($"whatsapp:{this.from_phone}");
                 messageOptions.Body = mensaje.message;
                 var message = MessageResource.Create(messageOptions);
                 new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + mensaje.phone);

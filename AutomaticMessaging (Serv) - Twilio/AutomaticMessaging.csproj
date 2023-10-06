@@ -155,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConnect.cs" />
-    <Compile Include="HttpService.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="AutomaticMessagingService.cs">
       <SubType>Component</SubType>
