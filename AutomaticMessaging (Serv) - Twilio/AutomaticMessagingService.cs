@@ -78,6 +78,7 @@ namespace AutomaticMessaging
                 messageOptions.Body = mensaje.message;
                 var message = MessageResource.Create(messageOptions);
                 new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + mensaje.phone);
+                db.Delete(mensaje.ID);
             }
             db.Disconnect();
         }
