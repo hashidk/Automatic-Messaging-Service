@@ -70,15 +70,25 @@ namespace AutomaticMessaging
             List<Mensaje> mensajes = db.GetData();
             foreach (Mensaje mensaje in mensajes)
             {
-                string to_phone = mensaje.phone;
-                if (!to_phone[0].Equals("+")) to_phone = "+" + to_phone;
+                string to_phone = mensaje.phone.ToString();
+                try
+                {
+                    if (!to_phone.Contains("+")) to_phone = "+" + to_phone;
+ 
+                    var messageOptions = new CreateMessageOptions(new PhoneNumber($"whatsapp:{to_phone}"));
+                    messageOptions.From = new PhoneNumber($"whatsapp:{this.from_phone}");
+                    messageOptions.Body = "Your Twilio code is 1238432";
+                    //messageOptions.Body = mensaje.message;
 
-                var messageOptions  = new CreateMessageOptions(new PhoneNumber($"whatsapp:{to_phone}"));
-                messageOptions.From = new PhoneNumber($"whatsapp:{this.from_phone}");
-                messageOptions.Body = mensaje.message;
-                var message = MessageResource.Create(messageOptions);
-                new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + mensaje.phone);
-                db.Delete(mensaje.ID);
+                    var message = MessageResource.Create(messageOptions);
+
+                    new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + to_phone);
+                    db.Delete(mensaje.ID);
+                }
+                catch (Exception e)
+                {
+                    new Logger().WriteToFile("[ERROR] " + e);
+                }
             }
             db.Disconnect();
         }
