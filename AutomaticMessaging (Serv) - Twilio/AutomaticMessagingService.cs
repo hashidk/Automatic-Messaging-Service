@@ -74,15 +74,21 @@ namespace AutomaticMessaging
                 try
                 {
                     if (!to_phone.Contains("+")) to_phone = "+" + to_phone;
- 
-                    var messageOptions = new CreateMessageOptions(new PhoneNumber($"whatsapp:{to_phone}"));
-                    messageOptions.From = new PhoneNumber($"whatsapp:{this.from_phone}");
-                    messageOptions.Body = "Your Twilio code is 1238432";
-                    //messageOptions.Body = mensaje.message;
 
-                    var message = MessageResource.Create(messageOptions);
+                    var message = MessageResource.Create(
+                        //body: "Hola",
+                        body: "Hola, este es un mensaje de prueba",
+                        from: new Twilio.Types.PhoneNumber($"whatsapp:{this.from_phone}"),
+                        to: new Twilio.Types.PhoneNumber($"whatsapp:{to_phone}")
+                    );
 
-                    new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + to_phone);
+                    //var messageOptions = new CreateMessageOptions(new PhoneNumber($"whatsapp:{to_phone}"));
+                    //messageOptions.From = new PhoneNumber($"whatsapp:{this.from_phone}");
+                    //messageOptions.Body = "Your Twilio code is 1238432";
+                    ////messageOptions.Body = mensaje.message;
+                    //var message = MessageResource.Create(messageOptions);
+
+                    new Logger().WriteToFile("[DEBUG] Mensaje enviado a " + to_phone + " Status: " + message.Status);
                     db.Delete(mensaje.ID);
                 }
                 catch (Exception e)
